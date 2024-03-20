@@ -37,9 +37,7 @@ aEntero (Left y) = y
     Punto 4
 -}
 
-esta :: String -> String -> Bool
-
-
-limpiar :: String -> String -> String 
-limpiar x y = filter esta y x
+s
+limpiar :: [Integer] -> [Integer] 
+limpiar x = filter (<5) x
     
