@@ -1,13 +1,14 @@
 import Data.Maybe
 import Data.Either
 import Data.String
+import GHC.Exts.Heap (GenClosure(value))
 
 {-
   Punto 2 (falta el d)  
 -}
 
 valorAbsoluto :: Float -> Float
-valorAbsoluto x | x<0 = -(x)
+valorAbsoluto x | x<0 = -x
                 |otherwise = x
 
 
@@ -28,6 +29,13 @@ inverso :: Float -> Maybe Float
 inverso x | (1/x) * x == 1 = Just (1/x)
           | otherwise = Nothing  
 
+{-
+  dame dato solo como prueba para obtener un valor Either Integer Bool
+-}
+dameDato :: Integer -> Either Integer Bool
+dameDato x | x>0 = Right True
+           | otherwise = Left x
+
 aEntero :: Either Integer Bool -> Integer
 aEntero (Right x) | x = 1
                   |otherwise = 0
@@ -37,7 +45,5 @@ aEntero (Left y) = y
     Punto 4
 -}
 
-s
-limpiar :: [Integer] -> [Integer] 
-limpiar x = filter (<5) x
+
     
