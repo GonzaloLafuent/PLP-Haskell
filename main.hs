@@ -58,10 +58,30 @@ char = \x -> 'a'
  
 estaLaLetra :: Char -> Char -> Bool
 estaLaLetra x y | x == y = False
-            | otherwise = True   
+                | otherwise = True   
 
-
+{-Limpiar-}
 limpiar :: String -> String  -> String
 limpiar x y | x == y = x
             | otherwise = y
-    
+
+{-Dif Promedio-}    
+suma :: [Float] -> Float
+suma [] = 0
+suma (x:xs) = x + suma xs
+
+promedio :: [Float] -> Float    
+promedio x = suma x / fromIntegral (length x) :: Float   
+
+difPromedio :: [Float] -> [Float] 
+difPromedio x = map (\y -> y - promedio x) x
+
+{-Todos Iguales-}
+iguales :: Integer -> [Integer] -> Bool
+iguales y [] = True
+iguales y (x:xs) | x == y = True && iguales y xs 
+                 |otherwise = False
+
+todosIguales :: [Integer] -> Bool
+todosIguales [] = True
+todosIguales (x:xs) = iguales x xs
