@@ -21,8 +21,26 @@ factorial :: Integer -> Integer
 factorial 0 = 1
 factorial x = x * factorial(x-1)
 
+{-cantdivisoresprimos-}
+esPrimo :: Integer -> Integer -> Bool
+esPrimo 0 j = False
+esPrimo 1 j = True
+esPrimo y j | j > y = True
+            | y `mod` j == 0 && y/=1 && y/=j = False
+            | otherwise = esPrimo y (j+1)
+
+divisoresPrimos :: Integer -> Integer -> Integer
+divisoresPrimos y x | y == x && esPrimo x 2 = 1
+                    | y == x = 0
+                    | x `mod` y == 0 && esPrimo y 2 = 1 + divisoresPrimos(y+1) x
+                    | otherwise = divisoresPrimos(y+1)x
+
+cantDivisoresPrimos :: Integer -> Integer
+cantDivisoresPrimos 0 = 0
+cantDivisoresPrimos 1 = 1
+cantDivisoresPrimos x = divisoresPrimos 1 x 
 {-
-  Punto 3 (problema para probar el b)  
+  Punto 3   
 -}
 
 inverso :: Float -> Maybe Float
@@ -85,3 +103,30 @@ iguales y (x:xs) | x == y = True && iguales y xs
 todosIguales :: [Integer] -> Bool
 todosIguales [] = True
 todosIguales (x:xs) = iguales x xs
+
+{-
+  Punto 5
+-}
+
+data AB a = Nil | Bin (AB a) a (AB a)
+arbol_1 :: AB Integer = Nil
+arbol_2 :: AB Integer = Bin (Bin Nil 2 Nil) 3 (Bin Nil 4 Nil )
+
+arbol_3 :: AB Bool = Nil
+arbol_4 :: AB Bool = Bin (Bin Nil True Nil) True (Bin Nil True Nil )
+
+vacioAB :: AB a -> Bool 
+vacioAB Nil = True
+vacioAB x = False
+
+negacionAB :: AB Bool -> AB Bool
+negacionAB Nil = Nil
+negacionAB (Bin l c r) = Bin (negacionAB l) (not c) (negacionAB r)
+
+showAB :: AB a -> [a]
+showAB Nil = []
+showAB (Bin l c r) = showAB(l)++[c]++showAB(r)  
+
+productoAB :: AB Integer -> Integer
+productoAB Nil = 1
+productoAB (Bin l c r) = c * productoAB(l) * productoAB(r)
