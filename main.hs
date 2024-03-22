@@ -4,7 +4,23 @@ import Data.String
 import GHC.Exts.Heap (GenClosure(value))
 
 {-
-  Punto 2 (falta el d)  
+  Punto 1
+
+  null: funcion que devuelve true si una lista esta vacia
+  head: devuelve el primer elemento de la lista
+  tail: devuelve la lista sin el primer elemento
+  init: devuelve los primeros elementos sin el ultimo
+  last: devuelve el ultimo elemento de la lista
+  take: recibe un entero n y un array y devuelve los primeros n elementos
+  drop: recibe un entero n y un array y elimina los primeros n elementos
+  elem: recibe un elemento e y un array y devuelve true si e esta en el array
+  concat: recibe una lista de listas y las concatena
+  (++): concatena dos listas
+  (!!): ??
+-}
+
+{-
+  Punto 2 
 -}
 
 valorAbsoluto :: Float -> Float
@@ -39,6 +55,7 @@ cantDivisoresPrimos :: Integer -> Integer
 cantDivisoresPrimos 0 = 0
 cantDivisoresPrimos 1 = 1
 cantDivisoresPrimos x = divisoresPrimos 1 x 
+
 {-
   Punto 3   
 -}
@@ -65,7 +82,7 @@ aEntero (Left y) = y
     Prueba de filter con array de numeros:
       limpiar :: a -> [Integer] 
       limpiar x =  filter (>5) (numArray x)
-
+    Falta el de limpiar
 -}
 
 word1 = \x -> ["p","u","e","r","t","a"]
