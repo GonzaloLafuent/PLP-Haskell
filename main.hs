@@ -126,11 +126,13 @@ todosIguales (x:xs) = iguales x xs
 -}
 
 data AB a = Nil | Bin (AB a) a (AB a)
-arbol_1 :: AB Integer = Nil
-arbol_2 :: AB Integer = Bin (Bin Nil 2 Nil) 3 (Bin Nil 4 Nil )
+data Dia = Dom | Lun | Mar | Mie | Jue | Vie | Sab
 
-arbol_3 :: AB Bool = Nil
-arbol_4 :: AB Bool = Bin (Bin Nil True Nil) True (Bin Nil True Nil )
+arbol_1  = Nil
+arbol_2  = Bin (Bin Nil 2 Nil) 3 (Bin Nil 4 Nil )
+
+arbol_3  = Nil
+arbol_4  = Bin (Bin Nil True Nil) True (Bin Nil True Nil )
 
 vacioAB :: AB a -> Bool 
 vacioAB Nil = True
@@ -147,3 +149,10 @@ showAB (Bin l c r) = showAB(l)++[c]++showAB(r)
 productoAB :: AB Integer -> Integer
 productoAB Nil = 1
 productoAB (Bin l c r) = c * productoAB(l) * productoAB(r)
+
+esFinDeSemana :: Dia -> Bool
+esFinDeSemana Sab = True
+esFinDeSemana _ = False
+
+data Persona = LaPersona String String Integer
+rebecaGuber = LaPersona "Rebeca" "Guber" 1926
