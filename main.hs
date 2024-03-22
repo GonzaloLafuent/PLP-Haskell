@@ -43,7 +43,25 @@ aEntero (Left y) = y
 
 {-
     Punto 4
+
+    Prueba de filter con array de numeros:
+      limpiar :: a -> [Integer] 
+      limpiar x =  filter (>5) (numArray x)
+
 -}
 
+word1 = \x -> ["p","u","e","r","t","a"]
+word2 = \x -> ["p","e","r","a"]
+numArray = \x -> [2,5,6,5]
 
+char = \x -> 'a'
+ 
+estaLaLetra :: Char -> Char -> Bool
+estaLaLetra x y | x == y = False
+            | otherwise = True   
+
+
+limpiar :: String -> String  -> String
+limpiar x y | x == y = x
+            | otherwise = y
     
