@@ -1,4 +1,5 @@
 import Data.Sequence.Internal.Sorting (QList(Nil))
+import Data.Fixed (showFixed)
 {-1B-}
 max2 :: Float -> Float -> Float
 max2 x y | x > y =  x
@@ -65,3 +66,19 @@ sumaAltInverse l = foldr (-) 0 (reverse l)
 
 {-4-}
 {-a-}
+
+{-6-}
+{- Esquema de recursion sobre listas -}
+recr :: (a -> [a] -> b -> b) -> b -> [a] -> b
+recr _ z [] = z
+recr f z (x : xs) = f x xs (recr f z xs)
+
+{-a-}
+sacarUna :: Eq a => a -> [a] -> [a]
+sacarUna e [] = []
+sacarUna e (x:xs) = if x==e then xs else x:sacarUna e xs 
+
+{-c-}
+insertaOrdenado :: Ord a => a -> [a] -> [a]
+insertaOrdenado e [] = []
+insertaOrdenado e (x:xs) = if e > x && null xs then x:[e] else x:insertaOrdenado e xs 
