@@ -1,0 +1,26 @@
+1)
+a)
+max :: (Float,Float) -> Float
+
+normaVectorial :: (Float,Float) -> Float
+
+subtract :: Float -> Float -> Float           //Recibe solo los valores a evaluar dado que la funcion ya esta   
+                                             //Harcodeada dentro de flip
+
+predecesor :: Float -> Float                 //En este caso ya tenermos hardcodeado la operacion y el primero argumento
+
+evaluarEnCero :: (Float -> b) -> b           //Como no especifica el tipo de f ponemos b por polimorfismo
+
+dosVeces :: (a -> a) -> a                   //Preguntar si el segund es a o (a->a)
+
+map :: (a -> b) -> [a] -> [b]
+flip :: (a -> b -> c) -> b -> a -> c
+
+fllipAll :: [a -> b -> c] -> [b -> a -> c]  //Como map toma una funcion que inverte los parametros de una funcion (flip)
+flipAll = map flip                          //Luego flip all lo que hace es tomar un array de funcion e evaluarlo en flip
+                                            //Por lo tanto devueve un array con las funciones invertidas en su parametros
+
+flip :: (a -> b -> c) -> b -> a -> c
+flip :: (d -> e -> f) -> e -> d -> f        
+flipRaro = flip flip    
+flipRaro :: b -> (a -> b -> c) -> a -> c
