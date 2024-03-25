@@ -97,3 +97,20 @@ genLista e f n = e:genLista (f e) f (n-1)
 {-x simepre es menor que y-}
 desdeHasta ::  Integer -> Integer -> [Integer]
 desdeHasta x y = genLista x (+1) ((y-x) +1) 
+
+{-8-}
+{-a-}
+mapPares :: [(a,b)] -> (a -> b -> c) -> [c] 
+mapPares [] f  = []
+mapPares (x:xs) f = unCurry f x : mapPares xs f
+
+{-b-}
+armarPares :: [a] -> [b] -> [(a,b)]
+armarPares [] a = []
+armarPares b [] = []
+armarPares (x:xs) (y:ys) = (x,y) : armarPares xs ys  
+
+{-c-}
+mapDoble :: (a->b->c) -> [a] -> [b] -> [c]
+mapDoble f [] [] = []
+mapDoble f (x:xs) (y:ys) = f x y : mapDoble f xs ys
