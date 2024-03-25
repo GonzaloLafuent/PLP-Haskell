@@ -79,6 +79,21 @@ sacarUna e [] = []
 sacarUna e (x:xs) = if x==e then xs else x:sacarUna e xs 
 
 {-c-}
+{-
 insertaOrdenado :: Ord a => a -> [a] -> [a]
 insertaOrdenado e [] = []
-insertaOrdenado e (x:xs) = if e > x && null xs then x:[e] else x:insertaOrdenado e xs 
+insertaOrdenado e (x:xs) = if e > x && null xs then x:[e] 
+                           else if e < x && 
+-} 
+
+{-7-}
+{-a-}
+{-a = elemento inicial, (a->a) = funcion que da el sigueinte, Integer = cantidad de elementos , [a] = array que devuelve-}
+genLista :: a -> (a -> a) -> Integer -> [a]
+genLista e f 0 = []
+genLista e f n = e:genLista (f e) f (n-1) 
+
+{-b-}
+{-x simepre es menor que y-}
+desdeHasta ::  Integer -> Integer -> [Integer]
+desdeHasta x y = genLista x (+1) ((y-x) +1) 
