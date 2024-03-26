@@ -66,6 +66,16 @@ sumaAltInverse l = foldr (-) 0 (reverse l)
 
 {-4-}
 {-a-}
+crearPermutacion :: (a -> [b]) -> [a] -> [b]
+
+
+permutaciones :: [a] -> [[a]]
+permutaciones [] = []
+permutaciones (x:xs) = []
+
+{-c-}
+prefijos :: [a] -> [[a]]
+prefijos (x:xs) =   
 
 {-6-}
 {- Esquema de recursion sobre listas -}
@@ -114,3 +124,35 @@ armarPares (x:xs) (y:ys) = (x,y) : armarPares xs ys
 mapDoble :: (a->b->c) -> [a] -> [b] -> [c]
 mapDoble f [] [] = []
 mapDoble f (x:xs) (y:ys) = f x y : mapDoble f xs ys
+
+{-9-}
+{-a-}
+sumaMat :: [[Integer]] -> [[Integer]] -> [[Integer]]
+sumaMat [] [] = []
+sumaMat (x:xs) (y:ys) = zipWith (+) x y : sumaMat xs ys 
+
+{-b-}
+trasponer :: [[Integer]] -> [[Integer]] 
+trasponer [] = []
+{-queda para despúes-}
+
+{-10-}
+generate :: ([a] -> Bool) -> ([a] -> a) -> [a]
+generate stop next = generateFrom stop next []
+
+generateFrom:: ([a] -> Bool) -> ([a] -> a) -> [a] -> [a]
+generateFrom stop next xs | stop xs = init xs
+                          | otherwise = generateFrom stop next (xs ++ [next xs])
+{-
+{-a-}
+generateBase::([a] -> Bool) -> a -> (a -> a) -> [a]
+generateBase stop e next | stop e = 
+                         | otherwise = generateFrom stop nex (xs ++ [next xs])
+{-b-}
+factorial :: Integer -> Integer
+factorial 0 = 1
+factorial n = n * factorial (n-1)
+
+factoriales :: Integer -> [Integer]
+factoriales n = generate (\l -> not(null l) ) (\l -> map +1 l) 
+-}
