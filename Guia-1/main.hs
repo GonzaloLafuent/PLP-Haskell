@@ -166,3 +166,21 @@ foldNat f x n = f x (foldNat f x (n-1))
 {-b-}
 potencia :: Integer -> Integer -> Integer
 potencia x y = foldNat (\y res -> x * res) 1 y
+
+{-12-}
+data Polinomio a = X
+                  |Cte a
+                  |Suma (Polinomio a) (Polinomio a)
+                  |Prod (Polinomio a) (Polinomio a)
+
+foldPol :: b -> (a -> b) -> (b -> b ->b) -> (b -> b -> b) -> Polinomio a -> b
+foldPol cX cCte cSuma cProd pol = case pol of
+                                     x -> cX
+                                     Cte k -> cCte k 
+                                     Suma p q -> cSuma (r p) (r q)
+                                     Prod p q -> cProd (r p) (r q)
+                                   where r = foldPol cX cCte cSuma cProd    
+ 
+evaluar :: Num a => a -> Polinomio a -> a
+evaluar e p = foldPol e id (+) (*) p    
+ 
