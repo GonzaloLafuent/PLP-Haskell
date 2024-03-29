@@ -67,7 +67,7 @@ sumaAltInverse l = foldr (-) 0 (reverse l)
 {-4-}
 {-a-}
 crearPermutacion :: (a -> [b]) -> [a] -> [b]
-
+crearPermutacion f l  = [] 
 
 permutaciones :: [a] -> [[a]]
 permutaciones [] = []
@@ -75,7 +75,7 @@ permutaciones (x:xs) = []
 
 {-c-}
 prefijos :: [a] -> [[a]]
-prefijos (x:xs) =   
+prefijos (x:xs) = []  
 
 {-6-}
 {- Esquema de recursion sobre listas -}
@@ -156,3 +156,13 @@ factorial n = n * factorial (n-1)
 factoriales :: Integer -> [Integer]
 factoriales n = generate (\l -> not(null l) ) (\l -> map +1 l) 
 -}
+
+{-11-}
+{-a-}
+foldNat :: (Integer -> Integer -> Integer) -> Integer -> Integer -> Integer
+foldNat f x 0 = x
+foldNat f x n = f x (foldNat f x (n-1))
+
+{-b-}
+potencia :: Integer -> Integer -> Integer
+potencia x y = foldNat (\y res -> x * res) 1 y
