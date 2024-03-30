@@ -1,5 +1,7 @@
-import Data.Sequence.Internal.Sorting (QList(Nil))
 import Data.Fixed (showFixed)
+import GHC.IO.Encoding.Failure (codingFailureModeSuffix)
+import Text.XHtml (base)
+
 {-1B-}
 max2 :: Float -> Float -> Float
 max2 x y | x > y =  x
@@ -183,4 +185,38 @@ foldPol cX cCte cSuma cProd pol = case pol of
  
 evaluar :: Num a => a -> Polinomio a -> a
 evaluar e p = foldPol e id (+) (*) p    
- 
+
+{-13-}
+data AB a = Nil | Bin(AB a) a (AB a)
+
+{-a-}
+foldAB :: b -> (b -> a -> b -> b) -> AB a -> b
+foldAB cNil cBin ab = case ab of
+                        Nil -> cNil
+                        Bin i e d -> cBin (r i) e (r d)
+                      where r = foldAB cNil cBin 
+
+recAB :: b -> (AB a -> AB a -> b -> a -> b -> b) -> AB a -> b
+recAB cNil cBin ab = case ab of
+                        Nil -> cNil
+                        Bin i e d -> cBin i d (r i) e (r d) 
+                     where r = recAB cNil cBin    
+
+{-b-}                     
+arbol_1  = Nil
+arbol_2  = Bin (Bin Nil 2 Nil) 3 (Bin Nil 4 ((Bin Nil 2 Nil)) )
+
+cantidadDeNodos :: AB a -> Integer
+cantidadDeNodos ab = foldAB 0 (\i r d -> i + 1 + d) ab
+
+altura :: AB a -> Integer
+altura ab = recAB 0 (\ai ad i r d -> max (cantidadDeNodos ai +1) (cantidadDeNodos ad + 1) ) ab
+
+esNil :: AB a -> Bool
+esNil ab = case ab of
+                Nil -> True
+                Bin i e d -> False
+
+{-c-}
+mejorSegun :: Ord a => (a -> a -> Bool ) AB a -> a
+mejorSegun p ab = foldr 0 () 
