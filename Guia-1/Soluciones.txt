@@ -25,6 +25,10 @@ flip :: (d -> e -> f) -> e -> d -> f
 flipRaro = flip flip    
 flipRaro :: b -> (a -> b -> c) -> a -> c
 
+2)
+c)
+curryN 
+
 5)
 La primer funcion no es recursiva estrutural por hacer referencia al resto de la lista
 por fuera del llamado a a la recursion. la segunda tampoco lo es debido a que devuelve un valor que no es fijo

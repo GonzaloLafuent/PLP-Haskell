@@ -1,6 +1,6 @@
 import Data.Fixed (showFixed)
 import GHC.IO.Encoding.Failure (codingFailureModeSuffix)
-import Text.XHtml (base)
+import Text.XHtml (base, background)
 
 {-1B-}
 max2 :: Float -> Float -> Float
@@ -39,12 +39,30 @@ mejor_segun :: (a -> a -> Bool) -> [a] -> a
 mejor_segun p l = foldr1 (\x r-> if p x r then x else r ) l
 
 {-c-}
+
+
 sumas :: Num a => [a] -> [a]
 sumas [] = []
 sumas (x:xs) = [x + (sum xs)] ++ sumas xs
 
 sumasParciales :: Num a => [a] -> [a]
 sumasParciales l = reverse( sumas (reverse l))
+
+{-
+forma con foldr:
+
+sumasParciales :: Num a => [a] -> [a]
+sumasParciales l = foldr (\x r -> x: (map (\y -> (x+y))r)) [] l
+
+
+  sumasParciales [2,5,7] =  2 : map (\y -> (x+y) foldr [5,7]
+                          2 : map (\y -> (x+y)  5 : map (\y -> (x+y) foldr [7]
+                          2 : map (\y -> (x+y)  5 : map (\y -> (x+y) 7: map (\y -> (x+y)[]
+                          2 : map (\y -> (x+y)  5 : map (\y -> (x+y) [7]
+                          2 : map (\y -> (x+y)  [5,12]
+                          2: [7,14] = [2,7,14] 
+-}
+
 
 {-d-}
 sumaAlt :: Num a => [a] -> a
@@ -74,6 +92,9 @@ crearPermutacion f l  = []
 permutaciones :: [a] -> [[a]]
 permutaciones [] = []
 permutaciones (x:xs) = []
+
+partes :: [a] -> [[a]]
+partes l = [l]
 
 {-c-}
 prefijos :: [a] -> [[a]]
@@ -218,5 +239,41 @@ esNil ab = case ab of
                 Bin i e d -> False
 
 {-c-}
+{-
 mejorSegun :: Ord a => (a -> a -> Bool ) AB a -> a
-mejorSegun p ab = foldr 0 () 
+mejorSegun p ab = folAB (min a) (\i r d -> 
+-}
+
+{-
+esABB :: Ord a => AB a -> Bool
+esABB ab = recAB (True) (\ai ad i r d-> if (dameNodo ai) == Nothing  && Nothing== (dameNodo ad) then True
+                                        else if (dameNodo ad) > r then True && i && d
+                                        else False && i && d ) ab
+-}
+
+{-14-}
+{-a-}
+
+espejo :: AB a -> AB a
+espejo ab = foldAB Nil (\i r d -> Bin d r i) ab 
+
+{-b-}
+
+
+{-15-}
+data AIH a = Hoja a | Bin2 (AIH a) (AIH a)
+
+aih_1 = Bin2 (Hoja 2) (Hoja 3)
+
+aih_2 = Bin2 (Bin2 (Hoja 2) (Hoja 5)) (Hoja 4)
+{-a-}
+foldAIH :: (a -> b) -> (b -> b -> b) -> AIH a -> b
+foldAIH cHoja cBin2 t = case t of
+                          Hoja h -> cHoja h
+                          Bin2 i d -> cBin2 (r i) (r d)
+                        where r = foldAIH cHoja cBin2   
+
+tamañoAIH :: AIH a -> Integer
+tamañoAIH t = foldAIH (const 1) (\i d -> i + d) t
+
+{-16-}
