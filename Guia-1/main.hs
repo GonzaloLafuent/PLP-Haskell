@@ -93,12 +93,16 @@ permutaciones :: [a] -> [[a]]
 permutaciones [] = []
 permutaciones (x:xs) = []
 
+{-b-}
 partes :: [a] -> [[a]]
-partes l = [l]
+partes l = foldr (\x r -> (map (x:) r) ++ r) [[]] l
 
 {-c-}
 prefijos :: [a] -> [[a]]
-prefijos (x:xs) = []  
+prefijos l = filter (\x -> length x > 0) (foldl (\ac x ->  ac ++ ac ++ [[x]] ) [[]] l)
+
+sublistas :: [a] -> [[a]]
+sublistas l = foldr (\x r -> (map (x:) r) ++ r) [[]] l
 
 {-6-}
 {- Esquema de recursion sobre listas -}
@@ -166,18 +170,26 @@ generate stop next = generateFrom stop next []
 generateFrom:: ([a] -> Bool) -> ([a] -> a) -> [a] -> [a]
 generateFrom stop next xs | stop xs = init xs
                           | otherwise = generateFrom stop next (xs ++ [next xs])
-{-
 {-a-}
 generateBase::([a] -> Bool) -> a -> (a -> a) -> [a]
-generateBase stop e next | stop e = 
-                         | otherwise = generateFrom stop nex (xs ++ [next xs])
+generateBase stop e next = generateFrom stop (\l -> if null l then next (head l) else next (last l)) [e]
+
 {-b-}
-factorial :: Integer -> Integer
+factorial :: Int -> Int
 factorial 0 = 1
 factorial n = n * factorial (n-1)
 
-factoriales :: Integer -> [Integer]
-factoriales n = generate (\l -> not(null l) ) (\l -> map +1 l) 
+factoriales :: Int -> [Int]
+factoriales n = generate (\l -> (length l) == (n+1)) (\l -> factorial (length l+1)) 
+
+{-c-}
+iterateN :: Int -> (a->a) -> a -> [a]
+iterateN n f x = generateFrom (\l -> length l == n+1) (\l -> if null l then f (head l) else f (last l)) [x]  
+
+{-d-}
+{-
+generateFrom2:: ([a] -> Bool) -> ([a] -> a) -> [a] -> [a]
+generateFrom2 stop n
 -}
 
 {-11-}
