@@ -1,7 +1,3 @@
-import Data.Fixed (showFixed)
-import GHC.IO.Encoding.Failure (codingFailureModeSuffix)
-import Text.XHtml (base, background)
-
 {-1B-}
 max2 :: Float -> Float -> Float
 max2 x y | x > y =  x
@@ -289,3 +285,23 @@ tamañoAIH :: AIH a -> Integer
 tamañoAIH t = foldAIH (const 1) (\i d -> i + d) t
 
 {-16-}
+data RoseTree a = Rose a [RoseTree a]
+
+rose_1 = Rose 1 []
+rose_2 = Rose 2 [Rose  3 [],Rose 4 [],Rose 5 [Rose 6[]]]
+
+{-Como cada hijo va ser un arbol aplico, map para a cada subarbol aplicar la recursion sobre f -}
+foldRose :: (a -> [b] -> b) -> RoseTree a -> b
+foldRose f (Rose x hijos) = f x (map (foldRose f) hijos)
+
+{-a-}
+hojas :: RoseTree a -> [a]
+hojas t = foldRose (\x l ->  if null l then x:concat l else concat l ) t 
+
+{-b-}
+distancia :: RoseTree a -> [Int]
+distancia t = foldRose (\x l ->  if null l then 0:concat l else map (+1)(concat l) ) t
+
+{-c-}
+alturaRose :: RoseTree a -> Int 
+alturaRose t = maximum (foldRose (\x l ->  if null l then 1:concat l else map (+1)(concat l) ) t)
