@@ -106,30 +106,31 @@ es_una_gema o = isPrefixOf "Gema de" (nombre_objeto o)
 
 {-Ejercicio 1-}
 
-foldPersonaje :: (posicion -> String -> a) -> (Dirección -> a -> a ) -> (a -> a) -> Personaje -> a
+foldPersonaje :: (posicion -> String -> a) -> (a ->  Dirección-> a ) -> (a -> a) -> Personaje -> a
 foldPersonaje cPersonaje cMueve cMuere p = case p of
                                               Personaje pos nom -> cPersonaje pos nom
-                                              Mueve per dir -> cMueve dir (r per)
+                                              Mueve per dir -> cMueve (r per) dir
                                               Muere per -> cMuere (r per)
                                             where r = foldPersonaje cPersonaje cMueve cMuere 
 
-foldObjeto :: (posicion -> String -> a) -> (Objeto -> Personaje -> a -> a) -> (Objeto -> a -> a) -> Objeto -> a
+foldObjeto :: (posicion -> String -> a) -> (a -> Personaje -> a) -> (a -> a) -> Objeto -> a
 foldObjeto cObjeto cTomado cEsDestruido obj = case obj of
                                                 Objeto pos nom -> cObjeto pos nom
-                                                Tomado obj per -> cTomado obj per (re obj)
-                                                EsDestruido obj -> cEsDestruido obj (re obj)
-                                              where re = foldObjeto cObjeto cTomado cEsDestruido
+                                                Tomado obj per -> cTomado (r obj) per
+                                                EsDestruido obj -> cEsDestruido (r obj)
+                                              where r = foldObjeto cObjeto cTomado cEsDestruido
 
 {-Ejercicio 2-}
 
-posición_personaje :: Personaje -> Posicion
-posición_personaje = ?
+posición_personaje :: Personaje -> posicion
+posición_personaje = foldPersonaje (\p n -> p) (\r d -> r) (\r -> r) 
 
 nombre_objeto :: Objeto -> String
-nombre_objeto = ?
+nombre_objeto = foldObjeto (\p n -> n) (\r p -> r) (\r -> r) 
 
 {-Ejercicio 3-}
 
+{-
 objetos_en :: [Either Personaje Objeto] -> [Objeto]
 objetos_en = ?
 
@@ -156,6 +157,7 @@ tiene_thanos_todas_las_gemas = ?
 
 podemos_ganarle_a_thanos :: [Either Objeto Perosonaje] -> Bool
 podemos_ganarle_a_thanos = ?
+-}
 
 {-Tests-}
 
